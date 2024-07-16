@@ -1,0 +1,13 @@
+This text file is intended to document progress on attempting to get the concerto docker image runnin.
+At the time of first writing (7/16/24), we have managed to get the database and concerto images talking to each other, though we are still encountering errors related to ruby gems.
+Our current fixes are documented below:
+
+7/16/24
+- Download an sql image from dockerhub. The concerto image is included with the repository, but it seems we need to provide a databse image as well
+-- https://hub.docker.com/_/mysql
+- use compose up to combine both mysql and concerto images
+- in the event of an error, in the docker-compose file, disable auto-restart for both images. It makes it easier to follow errors, and the sql image in particular has issues with restarting from a crash
+- in the event of an error, clear volumes before rerunning images. There appears to be an issue with sql trying to restore its previous state from a crash that leads to another crash
+- in the Gemfile, include the date gem, version 3.3.4
+
+All of the above fixes have been committed to the repository (except for the sql image, the end user will have to do that)
