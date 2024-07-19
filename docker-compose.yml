@@ -14,6 +14,19 @@ services:
     volumes:
       - db:/var/lib/mysql
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports: 
+      - "8081:80"
+    #link as db
+    links:
+      - db:db
+    depends_on:
+      - db
+    logging:
+      driver: none
+
+
   concerto:
     image: concerto-test
     #restart: always
