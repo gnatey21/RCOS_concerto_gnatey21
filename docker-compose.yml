@@ -28,8 +28,8 @@ services:
 
 
   concerto:
-    image: concerto-test
-    #restart: always
+    image: concerto
+    restart: always
     ports: 
       - "80:80"
     environment:

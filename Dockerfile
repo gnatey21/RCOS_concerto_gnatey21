@@ -4,7 +4,9 @@ FROM phusion/passenger-ruby26:2.3.0
 LABEL Author="team@concerto-signage.org"
 
 # because phusion says to...
-ENV HOME /root
+#Satisfying a legacy format warning
+#ENV HOME /root
+ENV HOME=/root
 CMD ["/sbin/my_init"]
 
 # set up for eastern timezone by default
@@ -27,8 +29,17 @@ RUN mkdir -p /home/app/concerto/log \
 WORKDIR /home/app/concerto
 COPY . /home/app/concerto
 COPY config/database.yml.docker /home/app/concerto/config/database.yml
+#Jonathan here, attempting to use a different ruby bundler version
+#RUN chown -R app:app /home/app/concerto \
+#&& setuser app bash --login -c "cd /home/app/concerto && gem install bundler:2.0.0.pre.3 && bundle config set --local path 'vendor/bundle' && RAILS_ENV=production bundle install --full-index"
+##RUN chown -R app:app /home/app/concerto \
+##&& setuser app bash --login -c "rvm install 'ruby-2.6.0' && cd /home/app/concerto && gem install bundler -v 2.4.22 && bundle config set --local path 'vendor/bundle' && gem install sync -v '0.5.0' --source 'https://rubygems.org/' && gem install --install-dir ./vendor/bundle date -v 3.3.4 && RAILS_ENV=production bundle install --full-index --force"
+#end Jonathan's modification
+
+#What if we tried using gem install instead of bundler:
 RUN chown -R app:app /home/app/concerto \
-&& setuser app bash --login -c "cd /home/app/concerto && gem install bundler:2.0.0.pre.3 && bundle config set --local path 'vendor/bundle' && RAILS_ENV=production bundle install"
+    && setuser app bash --login -c "rvm install 'ruby-2.6.0' && cd /home/app/concerto && gem install sync -v '0.5.0' --source 'https://rubygems.org/' && gem install --install-dir ./vendor/bundle date -v 3.3.4 --source 'https://rubygems.org/' && gem install -g Gemfile"
+    
 
 # set up the background worker
 RUN mkdir -p /etc/service/concerto_clockwork
