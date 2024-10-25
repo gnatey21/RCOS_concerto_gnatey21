@@ -2,7 +2,7 @@
 source 'https://rubygems.org'
 
 # Lock the ruby version for now. We don't work on Ruby 2.7, so stick with Ruby 2.6
-ruby '~> 2.6.0'
+ruby '2.6.0'
 
 gem 'rails', '~> 4.2'
 gem 'nokogiri', '~> 1.13', '>= 1.13.10' #pin while on ruby < 2.7
@@ -96,3 +96,10 @@ gem 'font-awesome-sass'
 
 # Web console
 gem 'web-console', '~> 2.0', group: :development
+
+#debug includes from Jonathan
+#I don't truly know what's goin on here, but the image was complaining about not finding a 'date 3.3.4' gem so I tried forcing it to include here
+#That seems to have made some progress
+gem 'date', '3.3.4'
+gem 'rake', '13.1.0'
+gem 'sync', '0.5.0'
