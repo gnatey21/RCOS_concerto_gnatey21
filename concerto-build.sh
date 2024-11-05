@@ -8,21 +8,9 @@ apt-get install -y build-essential apt-transport-https libapache2-mod-passenger 
 #At this point, must ensure we are using ruby version 2.6.0
 apt install rbenv
 rbenv init
-#cd ~/.rbenv/plugins/ruby-build
-#git pull
 rbenv install 2.6.0
 rbenv global 2.6.0
 
-#Install ruby 2.6.0 via rvm
-: '
-apt-get update
-apt_get install -y curl gnupg build-essential
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-
-curl -sSL https://get.rvm.io | sudo bash -s stable
-
-usermod -a -G rvm `whoami`
-'
 gem install bundler
 
 # only need these three lines if you want to import various document formats to slides
